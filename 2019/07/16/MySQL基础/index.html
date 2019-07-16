@@ -5,21 +5,21 @@
   
 
   
-  <title>MySQL基础 | Hexo</title>
+  <title>MySQL基础 | 扶邓松的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="MySQL基础知识学习与总结123456789101112131415161718192021222324252627282930313233343536一、为什么要学习数据库二、数据库的相关概念      	DBMS、DB、SQL三、数据库存储数据的特点四、初始MySQL	MySQL产品的介绍        	MySQL产品的安装          ★        	MySQL服务的启动和停止">
+  <meta name="description" content="MySQL基础知识学习目录123456789101112131415161718192021222324252627282930313233343536一、为什么要学习数据库二、数据库的相关概念      	DBMS、DB、SQL三、数据库存储数据的特点四、初始MySQL	MySQL产品的介绍        	MySQL产品的安装          ★        	MySQL服务的启动和停止">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL基础">
 <meta property="og:url" content="http://yoursite.com/2019/07/16/MySQL基础/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="MySQL基础知识学习与总结123456789101112131415161718192021222324252627282930313233343536一、为什么要学习数据库二、数据库的相关概念      	DBMS、DB、SQL三、数据库存储数据的特点四、初始MySQL	MySQL产品的介绍        	MySQL产品的安装          ★        	MySQL服务的启动和停止">
-<meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-16T10:23:34.511Z">
+<meta property="og:site_name" content="扶邓松的个人博客">
+<meta property="og:description" content="MySQL基础知识学习目录123456789101112131415161718192021222324252627282930313233343536一、为什么要学习数据库二、数据库的相关概念      	DBMS、DB、SQL三、数据库存储数据的特点四、初始MySQL	MySQL产品的介绍        	MySQL产品的安装          ★        	MySQL服务的启动和停止">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-16T11:00:30.647Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL基础">
-<meta name="twitter:description" content="MySQL基础知识学习与总结123456789101112131415161718192021222324252627282930313233343536一、为什么要学习数据库二、数据库的相关概念      	DBMS、DB、SQL三、数据库存储数据的特点四、初始MySQL	MySQL产品的介绍        	MySQL产品的安装          ★        	MySQL服务的启动和停止">
+<meta name="twitter:description" content="MySQL基础知识学习目录123456789101112131415161718192021222324252627282930313233343536一、为什么要学习数据库二、数据库的相关概念      	DBMS、DB、SQL三、数据库存储数据的特点四、初始MySQL	MySQL产品的介绍        	MySQL产品的安装          ★        	MySQL服务的启动和停止">
   
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="扶邓松的个人博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -38,7 +38,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">扶邓松的个人博客</a>
       </h1>
       
     </div>
@@ -55,7 +55,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -86,7 +86,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="MySQL基础知识学习与总结"><a href="#MySQL基础知识学习与总结" class="headerlink" title="MySQL基础知识学习与总结"></a>MySQL基础知识学习与总结</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">一、为什么要学习数据库</span><br><span class="line">二、数据库的相关概念      </span><br><span class="line">	DBMS、DB、SQL</span><br><span class="line">三、数据库存储数据的特点</span><br><span class="line">四、初始MySQL</span><br><span class="line">	MySQL产品的介绍        </span><br><span class="line">	MySQL产品的安装          ★        </span><br><span class="line">	MySQL服务的启动和停止     ★</span><br><span class="line">	MySQL服务的登录和退出     ★      </span><br><span class="line">	MySQL的常见命令和语法规范      </span><br><span class="line">五、DQL语言的学习   ★              </span><br><span class="line">	基础查询        ★             </span><br><span class="line">	条件查询  	   ★			</span><br><span class="line">	排序查询  	   ★				</span><br><span class="line">	常见函数        ★               </span><br><span class="line">	分组函数        ★              </span><br><span class="line">	分组查询		   ★			</span><br><span class="line">	连接查询	 	★			</span><br><span class="line">	子查询       √                  </span><br><span class="line">	分页查询       ★              </span><br><span class="line">	union联合查询	√			</span><br><span class="line">	</span><br><span class="line">六、DML语言的学习    ★             </span><br><span class="line">	插入语句						</span><br><span class="line">	修改语句						</span><br><span class="line">	删除语句						</span><br><span class="line">七、DDL语言的学习  </span><br><span class="line">	库和表的管理	 √				</span><br><span class="line">	常见数据类型介绍  √          </span><br><span class="line">	常见约束  	  √			</span><br><span class="line">八、TCL语言的学习</span><br><span class="line">	事务和事务处理                 </span><br><span class="line">九、视图的讲解           √</span><br><span class="line">十、变量                      </span><br><span class="line">十一、存储过程和函数   </span><br><span class="line">十二、流程控制结构</span><br></pre></td></tr></table></figure>
+        <h2 id="MySQL基础知识学习目录"><a href="#MySQL基础知识学习目录" class="headerlink" title="MySQL基础知识学习目录"></a>MySQL基础知识学习目录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">一、为什么要学习数据库</span><br><span class="line">二、数据库的相关概念      </span><br><span class="line">	DBMS、DB、SQL</span><br><span class="line">三、数据库存储数据的特点</span><br><span class="line">四、初始MySQL</span><br><span class="line">	MySQL产品的介绍        </span><br><span class="line">	MySQL产品的安装          ★        </span><br><span class="line">	MySQL服务的启动和停止     ★</span><br><span class="line">	MySQL服务的登录和退出     ★      </span><br><span class="line">	MySQL的常见命令和语法规范      </span><br><span class="line">五、DQL语言的学习   ★              </span><br><span class="line">	基础查询        ★             </span><br><span class="line">	条件查询  	   ★			</span><br><span class="line">	排序查询  	   ★				</span><br><span class="line">	常见函数        ★               </span><br><span class="line">	分组函数        ★              </span><br><span class="line">	分组查询		   ★			</span><br><span class="line">	连接查询	 	★			</span><br><span class="line">	子查询       √                  </span><br><span class="line">	分页查询       ★              </span><br><span class="line">	union联合查询	√			</span><br><span class="line">	</span><br><span class="line">六、DML语言的学习    ★             </span><br><span class="line">	插入语句						</span><br><span class="line">	修改语句						</span><br><span class="line">	删除语句						</span><br><span class="line">七、DDL语言的学习  </span><br><span class="line">	库和表的管理	 √				</span><br><span class="line">	常见数据类型介绍  √          </span><br><span class="line">	常见约束  	  √			</span><br><span class="line">八、TCL语言的学习</span><br><span class="line">	事务和事务处理                 </span><br><span class="line">九、视图的讲解           √</span><br><span class="line">十、变量                      </span><br><span class="line">十一、存储过程和函数   </span><br><span class="line">十二、流程控制结构</span><br></pre></td></tr></table></figure>
 
 <h2 id="数据库的好处"><a href="#数据库的好处" class="headerlink" title="数据库的好处"></a>数据库的好处</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.持久化数据到本地</span><br><span class="line">2.可以实现结构化查询，方便管理</span><br></pre></td></tr></table></figure>
 
@@ -377,7 +377,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/16/MySQL基础/" data-id="cjy5o2l9e00015kvatasxb14f" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/16/MySQL基础/" data-id="cjy5ph6wq0001rova7mshpvyv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -411,9 +411,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li></ul>
     </div>
   </div>
 
@@ -421,7 +421,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
         
@@ -445,7 +445,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2019 John Doe<br>
+      &copy; 2019 扶邓松<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
