@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>SpringMVC基础知识总结 | 扶邓松的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Spring Web MVC是什么Spring Web MVC是一种基于Java的实现了Web MVC设计模式的请求驱动类型的轻量级Web框架，即使用了MVC架构模式的思想，将web层进行职责解耦，基于请求驱动指的就是使用请求-响应模型，框架的目的就是帮助我们简化开发，Spring Web MVC也是要简化我们日常Web开发的。 ##Spring Web MVC能帮我们做什么 √让我们能非常简单的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringMVC基础知识总结">
+<meta property="og:url" content="http://yoursite.com/2019/07/18/SpringMVC基础知识总结/index.html">
+<meta property="og:site_name" content="扶邓松的个人博客">
+<meta property="og:description" content="Spring Web MVC是什么Spring Web MVC是一种基于Java的实现了Web MVC设计模式的请求驱动类型的轻量级Web框架，即使用了MVC架构模式的思想，将web层进行职责解耦，基于请求驱动指的就是使用请求-响应模型，框架的目的就是帮助我们简化开发，Spring Web MVC也是要简化我们日常Web开发的。 ##Spring Web MVC能帮我们做什么 √让我们能非常简单的">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/917856/201610/917856-20161014152618453-403314151.jpg">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/917856/201610/917856-20161014152707437-1207720153.jpg">
+<meta property="og:updated_time" content="2019-07-21T07:27:25.429Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringMVC基础知识总结">
+<meta name="twitter:description" content="Spring Web MVC是什么Spring Web MVC是一种基于Java的实现了Web MVC设计模式的请求驱动类型的轻量级Web框架，即使用了MVC架构模式的思想，将web层进行职责解耦，基于请求驱动指的就是使用请求-响应模型，框架的目的就是帮助我们简化开发，Spring Web MVC也是要简化我们日常Web开发的。 ##Spring Web MVC能帮我们做什么 √让我们能非常简单的">
+<meta name="twitter:image" content="https://images2015.cnblogs.com/blog/917856/201610/917856-20161014152618453-403314151.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="扶邓松的个人博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">扶邓松的个人博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-SpringMVC基础知识总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/18/SpringMVC基础知识总结/" class="article-date">
+  <time datetime="2019-07-18T11:00:00.000Z" itemprop="datePublished">2019-07-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SpringMVC基础知识总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Spring-Web-MVC是什么"><a href="#Spring-Web-MVC是什么" class="headerlink" title="Spring Web MVC是什么"></a>Spring Web MVC是什么</h2><p>Spring Web MVC是一种基于Java的实现了Web MVC设计模式的请求驱动类型的轻量级Web框架，即使用了MVC架构模式的思想，将web层进行职责解耦，基于请求驱动指的就是使用请求-响应模型，框架的目的就是帮助我们简化开发，Spring Web MVC也是要简化我们日常Web开发的。</p>
+<p>##Spring Web MVC能帮我们做什么</p>
+<p>√让我们能非常简单的设计出干净的Web层和薄薄的Web层；</p>
+<p>√进行更简洁的Web层的开发；</p>
+<p>√天生与Spring框架集成（如IoC容器、AOP等）；</p>
+<p>√提供强大的约定大于配置的契约式编程支持；</p>
+<p>√能简单的进行Web层的单元测试；</p>
+<p>√支持灵活的URL到页面控制器的映射；</p>
+<p>√非常容易与其他视图技术集成，如Velocity、FreeMarker等等，因为模型数据不放在特定的API里，而是放在一个Model里（<code>Map</code>数据结构实现，因此很容易被其他框架使用）；</p>
+<p>√非常灵活的数据验证、格式化和数据绑定机制，能使用任何对象进行数据绑定，不必实现特定框架的API；</p>
+<p>√提供一套强大的JSP标签库，简化JSP开发；</p>
+<p>√支持灵活的本地化、主题等解析；</p>
+<p>√更加简单的异常处理；</p>
+<p>√对静态资源的支持；</p>
+<p>√支持Restful风格。</p>
+<h2 id="Spring-Web-MVC架构"><a href="#Spring-Web-MVC架构" class="headerlink" title="Spring Web MVC架构"></a>Spring Web MVC架构</h2><p><img src="https://images2015.cnblogs.com/blog/917856/201610/917856-20161014152618453-403314151.jpg" alt="springmvc"></p>
+<p>具体执行步骤如下：</p>
+<p>1、  首先用户发送请求————&gt;前端控制器，前端控制器根据请求信息（如URL）来决定选择哪一个页面控制器进行处理并把请求委托给它，即以前的控制器的控制逻辑部分；图中的1、2步骤；</p>
+<p>2、  页面控制器接收到请求后，进行功能处理，首先需要收集和绑定请求参数到一个对象，这个对象在Spring Web MVC中叫命令对象，并进行验证，然后将命令对象委托给业务对象进行处理；处理完毕后返回一个ModelAndView（模型数据和逻辑视图名）；图中的3、4、5步骤；</p>
+<p>3、  前端控制器收回控制权，然后根据返回的逻辑视图名，选择相应的视图进行渲染，并把模型数据传入以便视图渲染；图中的步骤6、7；</p>
+<p>4、  前端控制器再次收回控制权，将响应返回给用户，图中的步骤8；至此整个结束。</p>
+<h2 id="SpringMVC流程图"><a href="#SpringMVC流程图" class="headerlink" title="SpringMVC流程图"></a>SpringMVC流程图</h2><p><img src="https://images2015.cnblogs.com/blog/917856/201610/917856-20161014152707437-1207720153.jpg" alt="springmvc02"></p>
+<h2 id="处理器映射器"><a href="#处理器映射器" class="headerlink" title="处理器映射器"></a>处理器映射器</h2><p>BeanNameUrlHandlerMapping功能：寻找 Controller，根据 url 请求去匹配 bean 的 name 属性 url，从而获取 Controller</p>
+<p>SimpleUrlHandlerMaping功能：寻找 Controller，根据浏览器 url 匹配简单 url 的 key，key 又 Controller 的 id 找到 Controller</p>
+<p>ControllerClassNameHandlerMapping功能：寻找 Controller，根据类名（MyController）类名.do 来访问,类名首字母小写</p>
+<h2 id="处理器适配器"><a href="#处理器适配器" class="headerlink" title="处理器适配器"></a>处理器适配器</h2><p>SimpleControllerHandlerAdapter功能：执行 controller，调用 controller 里面方法，返回 modelAndView。</p>
+<p>HttpRequestHandlerAdapter功能：执行 controller</p>
+<p> <a href="mvc:annotation-driven/" target="_blank" rel="noopener">mvc:annotation-driven/</a>默认创建注解处理器映射器，注解处理器适配器。提供 json 格式支持。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/18/SpringMVC基础知识总结/" data-id="cjycn3xbu0000hwva1ebqd25m" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/07/20/SpringCloud基础架构搭建/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          SpringCloud基础架构
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/07/18/Spring基础知识总结/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Spring基础知识总结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/07/20/SpringCloud基础架构搭建/">SpringCloud基础架构</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/18/SpringMVC基础知识总结/">SpringMVC基础知识总结</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/18/Spring基础知识总结/">Spring基础知识总结</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/17/NoSQL数据库Redis/">Redis基础</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/16/MySQL基础/">MySQL基础</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 扶邓松<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

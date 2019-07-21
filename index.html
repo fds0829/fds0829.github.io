@@ -553,7 +553,71 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/20/SpringCloud基础架构搭建/" data-id="cjyblq1x30005vgvavc4bx2f0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/20/SpringCloud基础架构搭建/" data-id="cjycn3xdg0004hwvakmgid6lf" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-SpringMVC基础知识总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/18/SpringMVC基础知识总结/" class="article-date">
+  <time datetime="2019-07-18T11:00:00.000Z" itemprop="datePublished">2019-07-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/18/SpringMVC基础知识总结/">SpringMVC基础知识总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Spring-Web-MVC是什么"><a href="#Spring-Web-MVC是什么" class="headerlink" title="Spring Web MVC是什么"></a>Spring Web MVC是什么</h2><p>Spring Web MVC是一种基于Java的实现了Web MVC设计模式的请求驱动类型的轻量级Web框架，即使用了MVC架构模式的思想，将web层进行职责解耦，基于请求驱动指的就是使用请求-响应模型，框架的目的就是帮助我们简化开发，Spring Web MVC也是要简化我们日常Web开发的。</p>
+<p>##Spring Web MVC能帮我们做什么</p>
+<p>√让我们能非常简单的设计出干净的Web层和薄薄的Web层；</p>
+<p>√进行更简洁的Web层的开发；</p>
+<p>√天生与Spring框架集成（如IoC容器、AOP等）；</p>
+<p>√提供强大的约定大于配置的契约式编程支持；</p>
+<p>√能简单的进行Web层的单元测试；</p>
+<p>√支持灵活的URL到页面控制器的映射；</p>
+<p>√非常容易与其他视图技术集成，如Velocity、FreeMarker等等，因为模型数据不放在特定的API里，而是放在一个Model里（<code>Map</code>数据结构实现，因此很容易被其他框架使用）；</p>
+<p>√非常灵活的数据验证、格式化和数据绑定机制，能使用任何对象进行数据绑定，不必实现特定框架的API；</p>
+<p>√提供一套强大的JSP标签库，简化JSP开发；</p>
+<p>√支持灵活的本地化、主题等解析；</p>
+<p>√更加简单的异常处理；</p>
+<p>√对静态资源的支持；</p>
+<p>√支持Restful风格。</p>
+<h2 id="Spring-Web-MVC架构"><a href="#Spring-Web-MVC架构" class="headerlink" title="Spring Web MVC架构"></a>Spring Web MVC架构</h2><p><img src="https://images2015.cnblogs.com/blog/917856/201610/917856-20161014152618453-403314151.jpg" alt="springmvc"></p>
+<p>具体执行步骤如下：</p>
+<p>1、  首先用户发送请求————&gt;前端控制器，前端控制器根据请求信息（如URL）来决定选择哪一个页面控制器进行处理并把请求委托给它，即以前的控制器的控制逻辑部分；图中的1、2步骤；</p>
+<p>2、  页面控制器接收到请求后，进行功能处理，首先需要收集和绑定请求参数到一个对象，这个对象在Spring Web MVC中叫命令对象，并进行验证，然后将命令对象委托给业务对象进行处理；处理完毕后返回一个ModelAndView（模型数据和逻辑视图名）；图中的3、4、5步骤；</p>
+<p>3、  前端控制器收回控制权，然后根据返回的逻辑视图名，选择相应的视图进行渲染，并把模型数据传入以便视图渲染；图中的步骤6、7；</p>
+<p>4、  前端控制器再次收回控制权，将响应返回给用户，图中的步骤8；至此整个结束。</p>
+<h2 id="SpringMVC流程图"><a href="#SpringMVC流程图" class="headerlink" title="SpringMVC流程图"></a>SpringMVC流程图</h2><p><img src="https://images2015.cnblogs.com/blog/917856/201610/917856-20161014152707437-1207720153.jpg" alt="springmvc02"></p>
+<h2 id="处理器映射器"><a href="#处理器映射器" class="headerlink" title="处理器映射器"></a>处理器映射器</h2><p>BeanNameUrlHandlerMapping功能：寻找 Controller，根据 url 请求去匹配 bean 的 name 属性 url，从而获取 Controller</p>
+<p>SimpleUrlHandlerMaping功能：寻找 Controller，根据浏览器 url 匹配简单 url 的 key，key 又 Controller 的 id 找到 Controller</p>
+<p>ControllerClassNameHandlerMapping功能：寻找 Controller，根据类名（MyController）类名.do 来访问,类名首字母小写</p>
+<h2 id="处理器适配器"><a href="#处理器适配器" class="headerlink" title="处理器适配器"></a>处理器适配器</h2><p>SimpleControllerHandlerAdapter功能：执行 controller，调用 controller 里面方法，返回 modelAndView。</p>
+<p>HttpRequestHandlerAdapter功能：执行 controller</p>
+<p> <a href="mvc:annotation-driven/" target="_blank" rel="noopener">mvc:annotation-driven/</a>默认创建注解处理器映射器，注解处理器适配器。提供 json 格式支持。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/18/SpringMVC基础知识总结/" data-id="cjycn3xbu0000hwva1ebqd25m" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1020,11 +1084,9 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/18/Spring基础知识总结/" data-id="cjyblq1wh0001vgvaeok91qhc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/18/Spring基础知识总结/" data-id="cjycn3xcu0002hwvamc51onte" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
-
     </footer>
   </div>
   
@@ -1169,7 +1231,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/17/NoSQL数据库Redis/" data-id="cjyblq1wu0004vgvaaua7tq4k" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/17/NoSQL数据库Redis/" data-id="cjycn3xdd0003hwva9iub0xbg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1492,7 +1554,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/16/MySQL基础/" data-id="cjyblq1wb0000vgva0w13rtwe" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/16/MySQL基础/" data-id="cjycn3xcr0001hwvao31eo6ya" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1512,23 +1574,9 @@
 
   
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">标签</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
-    </div>
-  </div>
-
 
   
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">标签云</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Spring/" style="font-size: 10px;">Spring</a>
-    </div>
-  </div>
-
   
     
   <div class="widget-wrap">
@@ -1548,6 +1596,10 @@
         
           <li>
             <a href="/2019/07/20/SpringCloud基础架构搭建/">SpringCloud基础架构</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/18/SpringMVC基础知识总结/">SpringMVC基础知识总结</a>
           </li>
         
           <li>
