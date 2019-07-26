@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>zooKeeper基础 | 扶邓松的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="ZooKeeper入门概述 是什么 Zookeeper是一种分布式协调服务。所谓分布式协调服务就是在分布式系统中共享配置、协调锁资源，提供统一命名服务、统一配置管理、统一集群管理、服务器节点动态上下线、软负载均衡等  特点   zookeeper：一个领导者(Leader),多个跟随者(Follower)组成的集群。 集群中只要有半数以上的节点存活，Zookeeper集群就能正常服务 全局数据一致">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zooKeeper基础">
+<meta property="og:url" content="http://yoursite.com/2019/07/26/ZooKeeper基础/index.html">
+<meta property="og:site_name" content="扶邓松的个人博客">
+<meta property="og:description" content="ZooKeeper入门概述 是什么 Zookeeper是一种分布式协调服务。所谓分布式协调服务就是在分布式系统中共享配置、协调锁资源，提供统一命名服务、统一配置管理、统一集群管理、服务器节点动态上下线、软负载均衡等  特点   zookeeper：一个领导者(Leader),多个跟随者(Follower)组成的集群。 集群中只要有半数以上的节点存活，Zookeeper集群就能正常服务 全局数据一致">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.uml.org.cn/zjjs/images/2014111411.png">
+<meta property="og:image" content="http://www.uml.org.cn/zjjs/images/2014111411.png">
+<meta property="og:updated_time" content="2019-07-26T13:41:19.813Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="zooKeeper基础">
+<meta name="twitter:description" content="ZooKeeper入门概述 是什么 Zookeeper是一种分布式协调服务。所谓分布式协调服务就是在分布式系统中共享配置、协调锁资源，提供统一命名服务、统一配置管理、统一集群管理、服务器节点动态上下线、软负载均衡等  特点   zookeeper：一个领导者(Leader),多个跟随者(Follower)组成的集群。 集群中只要有半数以上的节点存活，Zookeeper集群就能正常服务 全局数据一致">
+<meta name="twitter:image" content="http://www.uml.org.cn/zjjs/images/2014111411.png">
+  
+    <link rel="alternate" href="/atom.xml" title="扶邓松的个人博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">扶邓松的个人博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ZooKeeper基础" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/26/ZooKeeper基础/" class="article-date">
+  <time datetime="2019-07-26T08:00:00.000Z" itemprop="datePublished">2019-07-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      zooKeeper基础
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="ZooKeeper入门"><a href="#ZooKeeper入门" class="headerlink" title="ZooKeeper入门"></a>ZooKeeper入门</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><ol>
+<li><p>是什么</p>
+<p>Zookeeper是一种分布式协调服务。所谓分布式协调服务就是在分布式系统中共享配置、协调锁资源，提供统一命名服务、统一配置管理、统一集群管理、服务器节点动态上下线、软负载均衡等</p>
+</li>
+<li><p>特点</p>
+<p><img src="http://www.uml.org.cn/zjjs/images/2014111411.png" alt="zookeeper"></p>
+<ol>
+<li>zookeeper：一个领导者(Leader),多个跟随者(Follower)组成的集群。</li>
+<li>集群中只要有半数以上的节点存活，Zookeeper集群就能正常服务</li>
+<li>全局数据一致：每个Server保存一份相同的数据副本，Client无论连接到哪个Server，数据都是一致的。</li>
+<li>更新请求顺序进行，来自同一个Client的更新请求按其发送顺序依次执行</li>
+<li>数据更新原子性，一次数据更新要么成功，要么失败</li>
+<li>实时性，在一定时间</li>
+</ol>
+</li>
+<li><p>数据结构</p>
+<ul>
+<li>Zookeepre数据模型的结构与Unix文件系统很类似，整体上可以看作是一棵树，每个节点称作一个ZNode。每一个ZNode默认能够存储1MB的数据，每个ZNode都可以通过其路径唯一标识</li>
+</ul>
+</li>
+</ol>
+<h3 id="Zookeeper安装"><a href="#Zookeeper安装" class="headerlink" title="Zookeeper安装"></a>Zookeeper安装</h3><ol>
+<li><p>安装Jdk，下载Zookeeper安装包<a href="https://zookeeper.apache.org/" target="_blank" rel="noopener">https://zookeeper.apache.org/</a></p>
+</li>
+<li><p>拷贝Zookeeper安装包到Linux系统下</p>
+</li>
+<li><p>解压到指定的目录tar -zxvf zookeeper-3.4.14.tar.gz  -C /opt</p>
+</li>
+<li><p>修改配置，将zookeeper-3.4.14/conf这个路径下的zoo_sample.cfg复制一个，重命名为zoo.cfg；cp zoo_sample.cfg  zoo.cfg</p>
+</li>
+<li><p>打开zoo.cfg文件，vim zoo.cfg,修改dataDir路径 dataDir=/opt/zookeeper-3.4.14/zkData</p>
+</li>
+<li><p>在/opt/zookeeper-3.4.14路径下创建zkData文件夹 mkdir zkData</p>
+</li>
+<li><p>启动zookeeper:  sh zkServer.sh start</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /opt/zookeeper-3.4.14/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... already running as process 17491.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看进程是否启动jps</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">27441 Bootstrap</span><br><span class="line">17491 QuorumPeerMain</span><br><span class="line">5708 Jps</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /opt/zookeeper-3.4.14/bin/../conf/zoo.cfg</span><br><span class="line">Mode: standalone</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动客户端sh zkCli.sh </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[zk: localhost:2181(CONNECTED) 0]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用ls / 查看根节点，默认有一个zookeeper</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[zk: localhost:2181(CONNECTED) 0] ls /</span><br><span class="line">[zookeeper, fds]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>退出客户端quit</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[zk: localhost:2181(CONNECTED) 0] ls /</span><br><span class="line">[zookeeper, fds]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 1] quit</span><br><span class="line">Quitting...</span><br><span class="line">2019-07-26 18:25:20,701 [myid:] - INFO  [main:ZooKeeper@693] - Session: 0x1054b4e4bb80001 closed</span><br><span class="line">2019-07-26 18:25:20,704 [myid:] - INFO  [main-EventThread:ClientCnxn$EventThread@522] - EventThread shut down for session: 0x1054b4e4bb80001</span><br><span class="line">[root@VM_0_11_centos bin]#</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>停止Zookeeper服务 sh zkServer.sh  stop</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@VM_0_11_centos bin]# sh zkServer.sh  stop</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /opt/zookeeper-3.4.14/bin/../conf/zoo.cfg</span><br><span class="line">Stopping zookeeper ... STOPPED</span><br><span class="line">[root@VM_0_11_centos bin]#</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="配置参数解读"><a href="#配置参数解读" class="headerlink" title="配置参数解读"></a>配置参数解读</h3><ol>
+<li><p>tickTime =2000：通信心跳数，Zookeeper服务器与客户端心跳时间，单位毫秒Zookeeper使用的基本时间，服务器之间或客户端与服务器之间维持心跳的时间间隔，也就是每个tickTime时间就会发送一个心跳，时间单位为毫秒。它用于心跳机制，并且设置最小的session超时时间为两倍心跳时间。(session的最小超时时间是2*tickTime)</p>
+</li>
+<li><p>initLimit =10：LF初始通信时限</p>
+<p>集群中的Follower跟随者服务器与Leader领导者服务器之间初始连接时能容忍的最多心跳数（tickTime的数量），用它来限定集群中的Zookeeper服务器连接到Leader的时限。</p>
+</li>
+<li><p>syncLimit =5：LF同步通信时限</p>
+<p>集群中Leader与Follower之间的最大响应时间单位，假如响应超过syncLimit * tickTime，Leader认为Follwer死掉，从服务器列表中删除Follwer。</p>
+</li>
+<li><p>dataDir：数据文件目录+数据持久化路径 主要用于保存Zookeeper中的数据。</p>
+</li>
+<li><p>clientPort =2181：客户端连接端口 ,监听客户端连接的端口。</p>
+</li>
+</ol>
+<h3 id="选举机制"><a href="#选举机制" class="headerlink" title="选举机制"></a>选举机制</h3><ol>
+<li><p>半数机制：集群中半数以上机器存活，集群可用。所以Zookeeper适合安装奇数台服务器。</p>
+</li>
+<li><p>Zookeeper虽然在配置文件中并没有指定Master和Slave。但是，Zookeeper工作时，是有一个节点为Leader，其他则为Follower，Leader是通过内部的选举机制临时产生的。</p>
+</li>
+<li><p>以一个简单的例子来说明整个选举的过程。</p>
+<p>假设有五台服务器组成的Zookeeper集群，它们的id从1-5，同时它们都是最新启动的，也就是没有历史数据，在存放数据量这一点上，都是一样的。假设这些服务器依序启动，来看看会发生什么，如图所示</p>
+<p><img src="http://www.uml.org.cn/zjjs/images/2014111411.png" alt="zookeeper"></p>
+<ol>
+<li>服务器1启动，此时只有它一台服务器启动了，它发出去的报文没有任何响应，所以它的选举状态一直是LOOKING状态。</li>
+<li>服务器2启动，它与最开始启动的服务器1进行通信，互相交换自己的选举结果，由于两者都没有历史数据，所以id值较大的服务器2胜出，但是由于没有达到超过半数以上的服务器都同意选举它(这个例子中的半数以上是3)，所以服务器1、2还是继续保持LOOKING状态。</li>
+<li>服务器3启动，根据前面的理论分析，服务器3成为服务器1、2、3中的老大，而与上面不同的是，此时有三台服务器选举了它，所以它成为了这次选举的Leader。</li>
+<li>服务器4启动，根据前面的分析，理论上服务器4应该是服务器1、2、3、4中最大的，但是由于前面已经有半数以上的服务器选举了服务器3，所以它只能接收当小弟的命了。</li>
+<li>服务器5启动，同4一样当小弟。</li>
+</ol>
+</li>
+</ol>
+<h3 id="Stat结构体"><a href="#Stat结构体" class="headerlink" title="Stat结构体"></a>Stat结构体</h3><ol>
+<li>czxid-创建节点的事务zxid<ul>
+<li>每次修改ZooKeeper状态都会收到一个zxid形式的时间戳，也就是ZooKeeper事务ID。</li>
+<li>事务ID是ZooKeeper中所有修改总的次序。每个修改都有唯一的zxid，如果zxid1小于zxid2，那么zxid1在zxid2之前发生。</li>
+</ul>
+</li>
+<li>ctime - znode被创建的毫秒数(从1970年开始)</li>
+<li>mzxid - znode最后更新的事务zxid</li>
+<li>mtime - znode最后修改的毫秒数(从1970年开始)</li>
+<li>pZxid-znode最后更新的子节点zxid</li>
+<li>cversion - znode子节点变化号，znode子节点修改次数</li>
+<li>dataversion - znode数据变化号</li>
+<li>aclVersion - znode访问控制列表的变化号</li>
+<li>ephemeralOwner- 如果是临时节点，这个是znode拥有者的session id。如果不是临时节点则是0。</li>
+<li>dataLength- znode的数据长度</li>
+<li>numChildren - znode子节点数量</li>
+</ol>
+<h3 id="监听器原理"><a href="#监听器原理" class="headerlink" title="监听器原理"></a>监听器原理</h3><ol>
+<li>首先要有一个main()线程</li>
+<li>在main线程中创建zookeeper客户端，这时就会创建两个线程一个负责网络通信(connect),一个负责监听(listener)</li>
+<li>通过connect线程将注册的监听事件发送给Zookeeper</li>
+<li>在zookeeper的注册监听器列表中将注册的监听事件添加到列表中</li>
+<li>zookeeper监听到有数据或者路径变化，就会将这个消发送给listener线程</li>
+<li>listener线程内部调用process方法</li>
+</ol>
+<h3 id="分布式安装部署"><a href="#分布式安装部署" class="headerlink" title="分布式安装部署"></a>分布式安装部署</h3><ol>
+<li><p>集群规划,解压安装zookeeper安装包，配置多个Zookeeper服务，至少三个以上</p>
+</li>
+<li><p>配置服务器编号，在第一个zookeeper服务/opt/zookeeper-3.4.14/zkData目录下创建一个myid的文件touch myid</p>
+</li>
+<li><p>添加myid文件，注意一定要在linux里面创建，在notepad++里面很可能乱码</p>
+</li>
+<li><p>编辑myid文件 在文件中添加与server对应的编号：1，将其他的改myid文件中内容为2、3，根据你的zookeeper服务来修改，并增加如下配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server.2=hadoop102:2888:3888</span><br><span class="line">server.3=hadoop103:2888:3888</span><br><span class="line">server.4=hadoop104:2888:3888</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>同步zoo.cfg配置文件 xsync zoo.cfg</p>
+</li>
+<li><p>配置参数解读</p>
+<p>server.A=B:C:D。</p>
+<p><strong>A</strong>是一个数字，表示这个是第几号服务器；</p>
+<p>集群模式下配置一个文件myid，这个文件在dataDir目录下，这个文件里面有一个数据就是A的值，Zookeeper启动时读取此文件，拿到里面的数据与zoo.cfg里面的配置信息比较从而判断到底是哪个server。</p>
+<p><strong>B</strong>是这个服务器的ip地址；</p>
+<p><strong>C</strong>是这个服务器与集群中的Leader服务器交换信息的端口；</p>
+<p><strong>D</strong>是万一集群中的Leader服务器挂了，需要一个端口来重新进行选举，选出一个新的Leader，而这个端口就是用来执行选举时服务器相互通信的端口。</p>
+</li>
+<li><p>启动集群，查看状态，看能否正常启动，谁是leader</p>
+</li>
+</ol>
+<h3 id="客户端命令行操作"><a href="#客户端命令行操作" class="headerlink" title="客户端命令行操作"></a>客户端命令行操作</h3><table>
+<thead>
+<tr>
+<th>命令基本语法</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>help</td>
+<td>显示所有操作命令</td>
+</tr>
+<tr>
+<td>ls path [watch]</td>
+<td>使用 ls 命令来查看当前znode中所包含的内容</td>
+</tr>
+<tr>
+<td>ls2 path [watch]</td>
+<td>查看当前节点数据并能看到更新次数等数据</td>
+</tr>
+<tr>
+<td>create</td>
+<td>普通创建  -s 含有序列  -e  临时（重启或者超时消失）</td>
+</tr>
+<tr>
+<td>get path [watch]</td>
+<td>获得节点的值</td>
+</tr>
+<tr>
+<td>set</td>
+<td>设置节点的具体值</td>
+</tr>
+<tr>
+<td>stat</td>
+<td>查看节点状态</td>
+</tr>
+<tr>
+<td>delete</td>
+<td>删除节点</td>
+</tr>
+<tr>
+<td>rmr</td>
+<td>递归删除节点</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/26/ZooKeeper基础/" data-id="cjyk5d8l700007wvaagorrtlp" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/07/20/SpringCloud基础架构搭建/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">SpringCloud基础架构</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/07/26/ZooKeeper基础/">zooKeeper基础</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/20/SpringCloud基础架构搭建/">SpringCloud基础架构</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/18/SpringMVC基础知识总结/">SpringMVC基础知识总结</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/18/Spring基础知识总结/">Spring基础知识总结</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/17/NoSQL数据库Redis/">Redis基础</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 扶邓松<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
