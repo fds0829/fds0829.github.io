@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>JVM基础知识总结 | 扶邓松的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="JVM结构 类加载器 启动类加载器（Bootstrap）C++：%JAVA_HOME%\jre\lib\rt.jar 扩展类加载器（Extension）Java：%JAVA_HOME%\jre\lib\ext/*jar 应用程序类加载器（AppClassLoader）Java （也叫系统类加载器，加载当前应用的 classpath 的所有类）  Java堆一个 JVM 实例只存在一个堆内存，堆内存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM基础知识总结">
+<meta property="og:url" content="http://yoursite.com/2019/07/29/JVM基础知识总结/index.html">
+<meta property="og:site_name" content="扶邓松的个人博客">
+<meta property="og:description" content="JVM结构 类加载器 启动类加载器（Bootstrap）C++：%JAVA_HOME%\jre\lib\rt.jar 扩展类加载器（Extension）Java：%JAVA_HOME%\jre\lib\ext/*jar 应用程序类加载器（AppClassLoader）Java （也叫系统类加载器，加载当前应用的 classpath 的所有类）  Java堆一个 JVM 实例只存在一个堆内存，堆内存">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.reader8.cn/uploadfile/jiaocheng/20140140/2734/201401271534171357.gif">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/952935/201707/952935-20170719161150740-1984455628.jpg">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190323091202691.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW9fbWlhbw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190323092321501.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW9fbWlhbw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190323153004252.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW9fbWlhbw==,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-07-29T14:12:27.840Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JVM基础知识总结">
+<meta name="twitter:description" content="JVM结构 类加载器 启动类加载器（Bootstrap）C++：%JAVA_HOME%\jre\lib\rt.jar 扩展类加载器（Extension）Java：%JAVA_HOME%\jre\lib\ext/*jar 应用程序类加载器（AppClassLoader）Java （也叫系统类加载器，加载当前应用的 classpath 的所有类）  Java堆一个 JVM 实例只存在一个堆内存，堆内存">
+<meta name="twitter:image" content="http://www.reader8.cn/uploadfile/jiaocheng/20140140/2734/201401271534171357.gif">
+  
+    <link rel="alternate" href="/atom.xml" title="扶邓松的个人博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">扶邓松的个人博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JVM基础知识总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/29/JVM基础知识总结/" class="article-date">
+  <time datetime="2019-07-29T04:54:00.000Z" itemprop="datePublished">2019-07-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JVM基础知识总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="JVM结构"><a href="#JVM结构" class="headerlink" title="JVM结构"></a>JVM结构</h2><p><img src="http://www.reader8.cn/uploadfile/jiaocheng/20140140/2734/201401271534171357.gif" alt="jvm"></p>
+<h3 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h3><ol>
+<li>启动类加载器（Bootstrap）C++：%JAVA_HOME%\jre\lib\rt.jar</li>
+<li>扩展类加载器（Extension）Java：%JAVA_HOME%\jre\lib\ext/*jar</li>
+<li>应用程序类加载器（AppClassLoader）Java （也叫系统类加载器，加载当前应用的 classpath 的所有类）</li>
+</ol>
+<h3 id="Java堆"><a href="#Java堆" class="headerlink" title="Java堆"></a>Java堆</h3><p>一个 JVM 实例只存在一个堆内存，堆内存的大小是可以调节的。类加载器读取了类文件后，需要把类、方法、</p>
+<p>常变量、局部变量、new产生的对象，数组保存所有引用类型的真实信息放到堆内存中，以方便执行器执行</p>
+<ol>
+<li>堆是被所有线程共享的一块内存区域，在虚拟机启动的时候被创建。</li>
+<li>堆是垃圾收集的主要区域，因此很多时候被称为”GC”堆，现在垃圾收集一般是按照分代收集的的所以java堆还可以细分为：新生代、老年代；再细分就是Eden空间 、From Survivor 空间、ToSurvivor 空间。</li>
+<li>PermGen（永久区，1.8以后就没有了改成了Metaspace元数据区）</li>
+</ol>
+<h3 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h3><p>java的NIO库允许java程序使用直接内存，直接内存是java堆外的、直接向系统申请的内存空间。通常访问直接内存的速度会优于java堆，</p>
+<p>对于频繁的io操作，我们需要不断把内存中的对象复制到直接内存。然后由操作系统直接写入磁盘或者读出磁盘。这时候用到直接内存就减少了堆的内外内存来回复制的操作。</p>
+<p>直接内存不会受限于Xmx指定的最大堆大小，但是系统内是有限的，java堆和直接内存的总和依然受限于操作系统能给出的最大内存</p>
+<h3 id="虚拟机栈（平时说的栈）"><a href="#虚拟机栈（平时说的栈）" class="headerlink" title="虚拟机栈（平时说的栈）"></a>虚拟机栈（平时说的栈）</h3><p>线程私有（每个线程都有一个自己的栈），保存的变量包括：1.保存基本数据类型的值；2.保存引用变量，即堆区对象的引用(指针)。也可以用来保存加载方法时的帧。<br>a、栈内存是线程私有的，他的生命周期和线程相同。<br>b、栈内数据共享。<br>c、存放基本类型的变量数据，局部变量，和对象的引用，但对象本身不存放在栈中，而是存放在堆（new 出来的对象）或者常量池中（字符串常量对象存放在常量池中。）</p>
+<h3 id="本地方法区栈"><a href="#本地方法区栈" class="headerlink" title="本地方法区栈"></a>本地方法区栈</h3><p>本地方法栈与虚拟机栈作用相似，后者为虚拟机执行Java方法服务，而前者为虚拟机用到的Native方法服务。</p>
+<h3 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h3><p>方法区是被所有线程共享，所有字段和方法字节码，以及一些特殊方法如构造函数，接口代码也在此定义。简</p>
+<p>单说，所有定义的方法的信息都保存在该区域，此区属于共享区间。</p>
+<p>静态变量+常量+类信息(构造方法/接口定义)+运行时常量池存在方法区中。</p>
+<h3 id="PC-寄存器"><a href="#PC-寄存器" class="headerlink" title="PC 寄存器"></a>PC 寄存器</h3><p>每个线程都有一个程序计数器，是线程私有的,就是一个指针，指向方法区中的方法字节码（用来存储指向下一</p>
+<p>条指令的地址,也即将要执行的指令代码），由执行引擎读取下一条指令，是一个非常小的内存空间，几乎可以忽略</p>
+<p>不记。</p>
+<h3 id="执行引擎"><a href="#执行引擎" class="headerlink" title="执行引擎"></a>执行引擎</h3><p>执行引擎是java虚拟机的最核心组件之一，它负责执行虚拟机的字节码，现代虚拟机为了提高执行效率，会使用即时编译技术将方法编译成机器码后再执行 </p>
+<h3 id="垃圾回收系统"><a href="#垃圾回收系统" class="headerlink" title="垃圾回收系统"></a>垃圾回收系统</h3><p>垃圾回收系统是java虚拟机的重要组成部分，垃圾回收器可以对方法区、java堆和直接内存进行回收，其中java堆是垃圾收集器的工作重点</p>
+<h2 id="Java堆的分代"><a href="#Java堆的分代" class="headerlink" title="Java堆的分代"></a>Java堆的分代</h2><h3 id="为什么要分代"><a href="#为什么要分代" class="headerlink" title="为什么要分代"></a>为什么要分代</h3><p>内存是虚拟机管理的内存中最大的一块，也是垃圾回收最频繁的一块区域，我们程序所有的对象实例都存放在堆内存中。给堆内存分代是为了提高对象内存分配和垃圾回收的效率。试想一下，如果堆内存没有区域划分，所有的新创建的对象和生命周期很长的对象放在一起，随着程序的执行，堆内存需要频繁进行垃圾收集，而每次回收都要遍历所有的对象，遍历这些对象所花费的时间代价是巨大的，会严重影响我们的GC效率，这简直太可怕了。</p>
+<h3 id="内存分代划分"><a href="#内存分代划分" class="headerlink" title="内存分代划分"></a>内存分代划分</h3><p><img src="https://images2015.cnblogs.com/blog/952935/201707/952935-20170719161150740-1984455628.jpg" alt="java_head"></p>
+<h3 id="新生代-Young"><a href="#新生代-Young" class="headerlink" title="新生代 Young"></a>新生代 Young</h3><p>新生成的对象优先存放在新生代中，新生代对象朝生夕死，存活率很低，在新生代中，常规应用进行一次垃圾收集一般可以回收70% ~ 95% 的空间，回收效率很高。</p>
+<pre><code>HotSpot将新生代划分为三块，一块较大的Eden空间和两块较小的Survivor空间，默认比例为8：1：1。划分的目的是因为HotSpot采用复制算法来回收新生代，设置这个比例是为了充分利用内存空间，减少浪费。新生成的对象在Eden区分配（大对象除外，大对象直接进入老年代），当Eden区没有足够的空间进行分配时，虚拟机将发起一次Minor GC。
+
+GC开始时，对象只会存在于Eden区和From Survivor区，To Survivor区是空的（作为保留区域）。GC进行时，Eden区中所有存活的对象都会被复制到To Survivor区，而在From Survivor区中，仍存活的对象会根据它们的年龄值决定去向，年龄值达到年龄阀值（默认为15，新生代中的对象每熬过一轮垃圾回收，年龄值就加1，GC分代年龄存储在对象的header中）的对象会被移到老年代中，没有达到阀值的对象会被复制到To Survivor区。接着清空Eden区和From Survivor区，新生代中存活的对象都在To Survivor区。接着， From Survivor区和To Survivor区会交换它们的角色，也就是新的To Survivor区就是上次GC清空的From Survivor区，新的From Survivor区就是上次GC的To Survivor区，总之，不管怎样都会保证To Survivor区在一轮GC后是空的。GC时当To Survivor区没有足够的空间存放上一次新生代收集下来的存活对象时，需要依赖老年代进行分配担保，将这些对象存放在老年代中。</code></pre><h3 id="老年代Old"><a href="#老年代Old" class="headerlink" title="老年代Old"></a>老年代Old</h3><p>在新生代中经历了多次（具体看虚拟机配置的阀值）GC后仍然存活下来的对象会进入老年代中。老年代中的对象生命周期较长，存活率比较高，在老年代中进行GC的频率相对而言较低，而且回收的速度也比较慢。</p>
+<h3 id="永久代Permanent"><a href="#永久代Permanent" class="headerlink" title="永久代Permanent"></a>永久代Permanent</h3><p>永久代存储类信息、常量、静态变量、即时编译器编译后的代码等数据，对这一区域而言，Java虚拟机规范指出可以不进行垃圾收集，一般而言不会进行垃圾回收。</p>
+<h3 id="Minor-GC-和-Full-GC的区别"><a href="#Minor-GC-和-Full-GC的区别" class="headerlink" title="Minor GC 和 Full GC的区别"></a>Minor GC 和 Full GC的区别</h3><pre><code>新生代GC（Minor GC）：Minor GC指发生在新生代的GC，因为新生代的Java对象大多都是朝生夕死，所以Minor GC非常频繁，一般回收速度也比较快。当Eden空间不足以为对象分配内存时，会触发Minor GC。</code></pre><p>​    老年代GC（Full GC/Major GC）：Full GC指发生在老年代的GC，出现了Full GC一般会伴随着至少一次的Minor GC（老年代的对象大部分是Minor GC过程中从新生代进入老年代），比如：分配担保失败。Full GC的速度一般会比Minor GC慢10倍以上。当老年代内存不足或者显式调用System.gc()方法时，会触发Full GC。</p>
+<h2 id="Java垃圾回收算法"><a href="#Java垃圾回收算法" class="headerlink" title="Java垃圾回收算法"></a>Java垃圾回收算法</h2><h3 id="引用计数（Reference-Counting）"><a href="#引用计数（Reference-Counting）" class="headerlink" title="引用计数（Reference Counting）"></a>引用计数（Reference Counting）</h3><p>比较古老的回收算法。原理是此对象有一个引用，即增加一个计数，删除一个引用则减少一个计数。垃圾回收时，只用收集计数为0的对象。<br>缺点：此算法最致命的是无法处理循环引用的问题。</p>
+<h3 id="复制（Copying）"><a href="#复制（Copying）" class="headerlink" title="复制（Copying）"></a>复制（Copying）</h3><p>此算法把内存空间划为两个相等的区域，每次只使用其中一个区域。垃圾回收时，遍历当前使用区域，把正在使用中的对象复制到另外一个区域中。次算法每次只处理正在使用中的对象，因此复制成本比较小，同时复制过去以后还能进行相应的内存整理，不会出现“碎片”问题。<br>缺点：此算法的缺点也是很明显的，就是需要两倍内存空间。</p>
+<h3 id="标记-清除（Mark-Sweep）"><a href="#标记-清除（Mark-Sweep）" class="headerlink" title="标记-清除（Mark-Sweep）"></a>标记-清除（Mark-Sweep）</h3><p>此算法执行分两阶段。第一阶段从引用根节点开始标记所有被引用的对象，第二阶段遍历整个堆，把未标记的对象清除。<br>缺点：此算法需要暂停整个应用，同时，会产生内存碎片。</p>
+<h3 id="标记-整理（Mark-Compact）"><a href="#标记-整理（Mark-Compact）" class="headerlink" title="标记-整理（Mark-Compact）"></a>标记-整理（Mark-Compact）</h3><p>此算法结合了 “标记-清除”和“复制”两个算法的优点。也是分两阶段，第一阶段从根节点开始标记所有被引用对象，第二阶段遍历整个堆，把清除未标记对象并且把存活对象 “压缩”到堆的其中一块，按顺序排放。此算法避免了“标记-清除”的碎片问题，同时也避免了“复制”算法的空间问题。</p>
+<h3 id="增量收集（Incremental-Collecting）"><a href="#增量收集（Incremental-Collecting）" class="headerlink" title="增量收集（Incremental Collecting）"></a>增量收集（Incremental Collecting）</h3><p>实施垃圾回收算法，即：在应用进行的同时进行垃圾回收。</p>
+<h2 id="Java垃圾回收器"><a href="#Java垃圾回收器" class="headerlink" title="Java垃圾回收器"></a>Java垃圾回收器</h2><h3 id="分代垃圾回收器"><a href="#分代垃圾回收器" class="headerlink" title="分代垃圾回收器"></a>分代垃圾回收器</h3><h4 id="并行Parallel"><a href="#并行Parallel" class="headerlink" title="并行Parallel"></a>并行Parallel</h4><p><img src="https://img-blog.csdnimg.cn/20190323091202691.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW9fbWlhbw==,size_16,color_FFFFFF,t_70" alt="parallel"></p>
+<p>并行:多条垃圾收集线程并行工作，用户线程处于等待状态<br>如:ParNew、Parallel Scavenge、Parallel Old</p>
+<h4 id="并发-Concurrent"><a href="#并发-Concurrent" class="headerlink" title="并发 - Concurrent"></a>并发 - Concurrent</h4><p><img src="https://img-blog.csdnimg.cn/20190323092321501.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW9fbWlhbw==,size_16,color_FFFFFF,t_70" alt="concurrent"></p>
+<p>并发：指用户线程与垃圾线程同时执行（但不一定是并行的，可能会交替执行）</p>
+<h4 id="吞吐量"><a href="#吞吐量" class="headerlink" title="吞吐量"></a>吞吐量</h4><p>吞吐量就是CPU 运行用户代码的时间 与 CPU总消耗时间 的比值。<br>吞吐量 = 运行用户代码的时间 / (运行用户代码的时间+垃圾收集的时间)<br>假设虚拟机总共运行了100分钟，其中垃圾收集花了一分钟 吞吐量就是99%</p>
+<p><img src="https://img-blog.csdnimg.cn/20190323153004252.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW9fbWlhbw==,size_16,color_FFFFFF,t_70" alt="generation"></p>
+<h4 id="serial收集器"><a href="#serial收集器" class="headerlink" title="serial收集器"></a>serial收集器</h4><p><strong>串行收集器（JDK1.7之前默认）(属于年轻代Minor GC)  采用的复制算法</strong></p>
+<p>使用单线程处理所有垃圾回收工作，因为无需多线程交互，所以效率比较高，在进行垃圾收集时候，必须暂停其他所有的工作线程直到它收集结束。无法使用多处理器的优势，所以此收集器适合单处理器机器。当然，此收集器也可以用在小数据量（100M左右）情况下的多处理器机器上。<br>特点：CPU利用率最高，停顿时间即用户等待时间比较长。<br>使用场景：小型应用<br>JVM参数：可以使用-XX:+UseSerialGC打开。</p>
+<h4 id="ParNew收集器"><a href="#ParNew收集器" class="headerlink" title="ParNew收集器"></a>ParNew收集器</h4><p><strong>Serial收集器的多线程版本</strong></p>
+<p>除了使用多条线程进行垃圾收集之外，其余行为包括Serial收集器可用的所有控制参数（例如：-XX:SurvivorRatio、-XX:PretenureSizeThreshold、-XX:HandlePromotionFailure等）、收集算法、Stop The World、对象分配规则、回收策略等都与Serial收集器一致。</p>
+<p>ParNew收集器在单CPU的环境中绝对不会有比Serial收集器更好的效果，甚至由于存在线程交互的开销，该收集器在通过超线程技术实现的两个CPU的环境中都不能百分之百地保证能超越Serial收集器。当然，随着可以使用的CPU的数量的增加，它对于GC时系统资源的利用还是很有好处的。它默认开启的收集线程数与CPU的数量相同，在CPU非常多（譬如32个，现在CPU动辄就4核加超线程，服务器超过32个逻辑CPU的情况越来越多了）的环境下，可以使用-XX:ParallelGCThreads参数来限制垃圾收集的线程数。</p>
+<h4 id="parallel收集器"><a href="#parallel收集器" class="headerlink" title="parallel收集器"></a>parallel收集器</h4><p><strong>并行收集器 （JDK8默认）(属于年轻代Minor GC)</strong></p>
+<p>采用多线程来通过扫描并压缩堆，串行收集器在GC时会停止其他所有工作线程（stop-the-world），CPU利用率是最高的，所以适用于要求高吞吐量（throughput）的应用，但停顿时间（pause time）会比较长，所以对web应用来说就不适合，因为这意味着用户等待时间会加长。其实也就是多线程的serial收集器。<br>特点：停顿时间长，回收效率高，对吞吐量要求高。<br>使用场景：大型应用，科学计算，大规模数据采集等。<br>JVM参数：可以使用XX:+USeParNewGC打开。</p>
+<h4 id="CMS（Concurrent-Mark-Sweep）收集器"><a href="#CMS（Concurrent-Mark-Sweep）收集器" class="headerlink" title="CMS（Concurrent Mark Sweep）收集器"></a>CMS（Concurrent Mark Sweep）收集器</h4><p><strong>并发收集器 (属于老年代Major GC)</strong></p>
+<p>CMS默认启动的回收线程数=(cpu数+3)4<br>当cpu数&gt;4时，GC线程最多不超过25%的cpu资源，但是cpu数&lt;=4时，GC线程可能就会过多的占用用户cpu资源，从而导致应用程序慢，总吞吐量降低</p>
+<p>CMS（Concurrent Mark Sweep）收集器是基于“标记-清除”算法实现的，它使用多线程的算法去扫描堆（标记）并对发现的未使用的对象进行回收（清除）。整个过程分为6个步骤，包括：<br>初始标记（CMS initial mark）<br>并发标记（CMS concurrent mark）<br>并发预清理（CMS-concurrent-preclean）<br>重新标记（CMS remark）<br>并发清除（CMS concurrent sweep）<br>并发重置（CMS-concurrent-reset）</p>
+<p>其中初始标记、重新标记这两个步骤仍然需要“Stop The World”。初始标记仅仅只是标记一下GC Roots能直接关联到的对象，速度很快，并发标记阶段就是进行GC Roots Tracing的过程，而重新标记阶段则是为了修正并发标记期间，因用户程序继续运作而导致标记产生变动的那一部分对象的标记记录，这个阶段的停顿时间一般会比初始标记阶段稍长一些，但远比并发标记的时间短。其他动作都是并发的。</p>
+<p>需要注意的是，CMS收集器无法处理浮动垃圾（Floating Garbage），可能出现“Concurrent Mode Failure”失败而导致另一次Full GC的产生。由于CMS并发清理阶段用户线程还在运行着，伴随程序的运行自然还会有新的垃圾不断产生，这一部分垃圾出现在标记过程之后，CMS无法在本次收集中处理掉它们，只好留待下一次GC时再将其清理掉。这一部分垃圾就称为“浮动垃圾”。也是由于在垃圾收集阶段用户线程还需要运行，即还需要预留足够的内存空间给用户线程使用，因此CMS收集器不能像其他收集器那样等到老年代几乎完全被填满了再进行收集，需要预留一部分空间提供并发收集时的程序运作使用。在默认设置下，CMS收集器在老年代使用了68%的空间后就会被激活，这是一个偏保守的设置，如果在应用中老年代增长不是太快，可以适当调高参数-XX:CMSInitiatingOccupancyFraction的值来提高触发百分比，以便降低内存回收次数以获取更好的性能。要是CMS运行期间预留的内存无法满足程序需要，就会出现一次“Concurrent Mode Failure”失败，这时候虚拟机将启动后备预案：临时启用Serial Old收集器来重新进行老年代的垃圾收集，这样停顿时间就很长了。所以说参数-XX:CMSInitiatingOccupancyFraction设置得太高将会很容易导致大量“Concurrent Mode Failure”失败，性能反而降低。</p>
+<p>还有一个缺点，CMS是一款基于“标记-清除”算法实现的收集器，这意味着收集结束时会产生大量空间碎片。空间碎片过多时，将会给大对象分配带来很大的麻烦，往往会出现老年代还有很大的空间剩余，但是无法找到足够大的连续空间来分配当前对象，不得不提前触发一次Full GC。为了解决这个问题，CMS收集器提供了一个-XX:+UseCMSCompactAtFullCollection开关参数，用于在“享受”完Full GC服务之后额外免费附送一个碎片整理过程，内存整理的过程是无法并发的。空间碎片问题没有了，但停顿时间不得不变长了。虚拟机设计者们还提供了另外一个参数-XX: CMSFullGCsBeforeCompaction，这个参数用于设置在执行多少次不压缩的Full GC后，跟着来一次带压缩的。<br>特点：响应时间优先，减少垃圾收集停顿时间<br>使用场景：Web服务器/应用服务器、电信交换、集成开发环境。<br>JVM参数：可以使用-XX:+UseConcMarkSweepGC打开。</p>
+<h4 id="Serial-Old收集器"><a href="#Serial-Old收集器" class="headerlink" title="Serial Old收集器"></a>Serial Old收集器</h4><p>是Serial收集器的老年代版本，同样是<strong>单线程收集器</strong>，使用<strong>标记-整理</strong>算法。</p>
+<h4 id="Parallel-Old收集器"><a href="#Parallel-Old收集器" class="headerlink" title="Parallel Old收集器"></a>Parallel Old收集器</h4><p>是Parallel Scavenge收集器的老年代版本，使用<strong>多线程</strong>和<strong>标记-整理</strong>算法</p>
+<h3 id="全局的垃圾回收器"><a href="#全局的垃圾回收器" class="headerlink" title="全局的垃圾回收器"></a>全局的垃圾回收器</h3><h4 id="G1收集器"><a href="#G1收集器" class="headerlink" title="G1收集器"></a>G1收集器</h4><p>G1垃圾回收器是用在heap memory很大的情况下，把heap划分为很多很多的region块，然后并行的对其进行垃圾回收。<br>G1垃圾回收器在清除实例所占用的内存后，还会做内存压缩。</p>
+<p>G1垃圾回收器回收region的时候基本不会Stop The World，从整体来看是基于标记-整理算法，从局部（两个region之间）来看基于复制算法。</p>
+<p>1、G1垃圾收集器在JDK7 update 4之后对大于4G的堆有了更好的支持，</p>
+<p>G1是一个针对多处理器大容量内存的服务器端的垃圾收集器，其目标是在实现高吞吐量的同时，尽可能的满足垃圾收集暂停时间的要求。G1在执行一些Java堆空间中的全区域操作（如：全局标记）时是和应用程序线程并发进行的，因此减少了Java堆空间的中断比例。<br>它与前面的CMS收集器相比有两个显著的改进：一是G1收集器是基于“标记-整理”算法实现的收集器，也就是说它不会产生空间碎片，这对于长时间运行的应用系统来说非常重要。二是它可以非常精确地控制停顿，既能让使用者明确指定在一个长度为M毫秒的时间片段内，消耗在垃圾收集上的时间不得超过N毫秒，具备了一些实时Java（RTSJ）的垃圾收集器的特征。<br>首先将Java堆空间被划分为一个个相等的不连续的内存区域（regions）,每个region都有一个分代的角色:eden、survivor、old（old还有一种细分 humongous，用来存放大小超过 region 50%以上的巨型对象），每个区域都是虚拟机中的一段连续内存空间。G1从多个region中复制存活的对象，然后集中放入一个region中，同时整理、清除内存(copying收集算法)。<br>2、G1内存的分配<br>1.TLAB（TLAB占用年轻代内存）. 默认使用TLAB加速内存分配,。<br>2.Eden.如果TLAB不够用，则在Eden中分配内存生成对象。<br>3.Humongous.如果对象需要的内存超过一个region的50%以上，会忽略前两个步骤直接在老年代的humongous中分配（连续的Region）。<br>3、何时使用G1（-XX:+UseG1GC）<br>1.大内存中为了达到低gc延迟.<br>比如:heap size &gt;=6G,gc pause &lt;=0.5s<br>2.FullGC时间太长，或者太频繁。<br>调优参数：<br>-XX:MaxGCPauseMillis=200 用户设定的最大gc 停顿时间，默认是200ms.<br>-XX:InitiatingHeapOccupancyPercent=45 默认是45，也就是heap中45%的容量被使用，则会触发concurrent gc。<br>4、G1垃圾回收步骤详解<br>G1提供了两种GC模式，Young GC和Mixed GC，两种都是Stop The World(STW)的<br>5、G1 Young GC(STW)<br>1.当eden数据满了,则触发g1 YGC<br>2.并行的执行：<br>YGC 将 eden region 中存活的对象拷贝到survivor,或者直接晋升到Old Region中；将Survivor Regin中存活的对象拷贝到新的Survivor或者晋升old region。<br>3.计算下一次YGC eden、Survivor的尺寸<br>6、G1 Mix GC<br>在G1 GC中，它主要是为Mixed GC提供标记服务的，并不是一次GC过程的一个必须环节。global concurrent marking的执行过程分为五个步骤：<br>初始标记（initial mark，STW）<br>在此阶段，G1 GC 对根进行标记。该阶段与常规的 (STW) 年轻代垃圾回收密切相关。<br>根区域扫描（root region scan）<br>G1 GC 在初始标记的存活区扫描对老年代的引用，并标记被引用的对象。该阶段与应用程序（非 STW）同时运行，并且只有完成该阶段后，才能开始下一次 STW 年轻代垃圾回收。<br>并发标记（Concurrent Marking）<br>G1 GC 在整个堆中查找可访问的（存活的）对象。该阶段与应用程序同时运行，可以被 STW 年轻代垃圾回收中断<br>最终标记（Remark，STW）<br>该阶段是 STW 回收，帮助完成标记周期。G1 GC 清空 SATB 缓冲区，跟踪未被访问的存活对象，并执行引用处理。<br>清除垃圾（Cleanup，STW）<br>在这个最后阶段，G1 GC 执行统计和 RSet 净化的 STW 操作。在统计期间，G1 GC 会识别完全空闲的区域和可供进行混合垃圾回收的区域。清理阶段在将空白区域重置并返回到空闲列表时为部分并发</p>
+<p>7、G1收集策略</p>
+<p>JVM参数：可以使用–XX:+UseG1GC打开。</p>
+<h2 id="JVM参数"><a href="#JVM参数" class="headerlink" title="JVM参数"></a>JVM参数</h2><h3 id="默认配置"><a href="#默认配置" class="headerlink" title="默认配置"></a>默认配置</h3><p>对内存最大值是物理内存的1/4，堆内young:old=1:2，young中一个s:e=1:6，元数据空间12m-20m，年轻代默认拷贝次数15次，官方建议：young:old=3:5。</p>
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p>-Xmx1024 Java Heap最大值，最佳设值应该视物理内存大小及计算机内其他内存开销而定；<br>-Xms1024 Java Heap初始值，Server端JVM最好将-Xms和-Xmx设为相同值，开发测试机JVM可以保留默认值；<br>-Xmn512 Java Heap Young区大小；<br>-Xss1 每个线程的Stack大小；<br>-XX:NewRatio=3 设置老年代和年轻代的比例，几就是几倍<br>-XX:SurvivorRatio=4 e区和s区的比例<br>-XX:MaxTenuringThreshold=15 年轻代拷贝次数<br>-Duser.timezone=GMT+8 //设定GMT区域，避免CentOS坑爹的时区设置<br>-XX:+PrintGC<br>-XX:+PrintGCDetails 打印GC日志<br>-XX:+PrintGCDateStamps 时间戳<br>-XX:+PrintGCApplicationConcurrentTime<br>-XX:+PrintGCApplicationStoppedTime<br>-XX:PrintHeapAtGC<br>-Xloggc:filename<br>-XX:MetaspaceSize=56m：设定初始元数据空间大小<br>-XX:MaxMetaspaceSize=256m：设定最大元数据空间大小<br>-XX:MinMetaspaceFreeRatio= 当进行过Metaspace GC之后，会计算当前Metaspace的空闲空间比，如果空闲比小于这个参数，那么虚拟机将增长Metaspace的大小。<br>-XX:MaxMetaspaceFreeRatio= 当进行过Metaspace GC之后，会计算当前Metaspace的空闲空间比，如果空闲比大于这个参数，那么虚拟机会释放Metaspace的部分空间。<br>-XX:MaxMetaspaceExpansion= Metaspace增长时的最大幅度，<br>-XX:MinMetaspaceExpansion= Metaspace增长时的最小幅度，<br>-XX:+DisableExplicitGC //忽略手动调用GC, System.gc()的调用就会变成一个空调用，完全不触发GC<br>-XX:+UseSerialGC:设置串行收集器<br>-XX:+UseParallelGC：选择垃圾收集器为并行收集器。此配置仅对年轻代有效。即上述配置下，年轻代使用并发收集，而年老代仍旧使用串行收集。<br>-XX:+UseParallelOldGC：配置年老代垃圾收集方式为并行收集。JDK6.0支持对年老代并行收集。<br>-XX:+UseAdaptiveSizePolicy：设置此选项后，并行收集器会自动选择年轻代区大小和相应的Survivor区比例，以达到目标系统规定的最低相应时间或者收集频率等，此值建议使用并行收集器时，一直打开。<br>-XX:ParallelGCThreads=4：配置并行收集器的线程数，即：同时多少个线程一起进行垃圾回收。此值最好配置与处理器数目相等。<br>-XX:MaxGCPauseMillis=100:设置每次年轻代垃圾回收的最长时间，如果无法满足此时间，JVM会自动调整年轻代大小，以满足此值。<br>-XX:+UseConcMarkSweepGC：设置年老代为并发收集。测试中配置这个以后，-XX:NewRatio=4的配置失效了，原因不明。所以，此时年轻代大小最好用-Xmn设置。<br>-XX:+UseParNewGC:设置年轻代为并行收集。可与CMS收集同时使用。JDK5.0以上，JVM会根据系统配置自行设置，所以无需再设置此值。<br>-XX:CMSFullGCsBeforeCompaction：由于并发收集器不对内存空间进行压缩、整理，所以运行一段时间以后会产生“碎片”，使得运行效率降低。此值设置运行多少次GC以后对内存空间进行压缩、整理。<br>-XX:+UseCMSCompactAtFullCollection：打开对年老代的压缩。可能会影响性能，但是可以消除碎片<br>-XX:ParallelGCThreads=4：配置并行收集器的线程数，即：同时多少个线程一起进行垃圾回收。此值最好配置与处理器数目相等。<br>-XX:+CMSParallelRemarkEnabled //降低标记停顿<br>-XX:LargePageSizeInBytes=128m //内存页的大小<br>-XX:+UseFastAccessorMethods //原始类型的快速优化<br>-XX:+UseCMSInitiatingOccupancyOnly //使用手动定义初始化定义开始CMS收集<br>-XX:CMSInitiatingOccupancyFraction=70 //使用cms作为垃圾回收使用70％后开始CMS收集</p>
+<h2 id="JVM工具"><a href="#JVM工具" class="headerlink" title="JVM工具"></a>JVM工具</h2><h3 id="jps"><a href="#jps" class="headerlink" title="jps"></a>jps</h3><p> jps(Java Virtual Machine Process Status Tool)查看jvm进程，包括进程ID，进程启动的路径等等</p>
+<h3 id="jstack"><a href="#jstack" class="headerlink" title="jstack"></a>jstack</h3><p>jstack(Java Stack Trace)<br>查看Java线程的调用堆栈的，可以用来分析线程问题；可以查看运行的java程序的java stack和native stack的信息。</p>
+<ol>
+<li>针对活着的进程做本地的或远程的线程dump（jvm的dump文件）；</li>
+<li>针对core文件做线程dump。</li>
+</ol>
+<p>线程状态</p>
+<ul>
+<li>NEW,未启动的。不会出现在Dump中。</li>
+<li>RUNNABLE,在虚拟机内执行的。运行中状态，可能里面还能看到locked字样，表明它获得了某把锁</li>
+<li>BLOCKED,受阻塞并等待监视器锁。被某个锁(synchronizers)給block住了。</li>
+<li>WATING,无限期等待另一个线程执行特定操作。等待某个condition或monitor发生，一般停留在park(), wait(), sleep(),join() 等语句里。</li>
+<li>TIMED_WATING,有时限的等待另一个线程的特定操作。和WAITING的区别是wait() 等语句加上了时间限制 wait(timeout)。</li>
+<li>TERMINATED,已退出的。</li>
+</ul>
+<h3 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h3><p>jstat(Java Virtual Machine Statistics Monitoring Tool)</p>
+<ol>
+<li>jstat利用JVM内建的指令对Java应用程序的资源和性能进行实时的命令行的监控，包括了对进程的classloader，compiler，gc情况；</li>
+<li>监视VM内存内的各种堆和非堆的大小及其内存使用量，以及加载类的数量。</li>
+</ol>
+<p>-class：显示ClassLoad的相关信息；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Loaded:加载class的数量</span><br><span class="line">Bytes：所占用空间大小</span><br><span class="line">Unloaded：未加载数量</span><br><span class="line">Bytes:未加载占用空间</span><br><span class="line">Time：时间</span><br></pre></td></tr></table></figure>
+
+<p>-compiler：显示JIT编译的相关信息；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Compiled：编译数量。</span><br><span class="line">Failed：失败数量</span><br><span class="line">Invalid：不可用数量</span><br><span class="line">Time：时间</span><br><span class="line">FailedType：失败类型</span><br><span class="line">FailedMethod：失败的方法</span><br></pre></td></tr></table></figure>
+
+<p>-gc：显示和gc相关的堆信息；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">S0C：年轻代中第一个survivor（幸存区）的容量 (字节)</span><br><span class="line">S1C：年轻代中第二个survivor（幸存区）的容量 (字节)</span><br><span class="line">S0U：年轻代中第一个survivor（幸存区）目前已使用空间 (字节)</span><br><span class="line">S1U：年轻代中第二个survivor（幸存区）目前已使用空间 (字节)</span><br><span class="line">EC：年轻代中Eden（伊甸园）的容量 (字节)</span><br><span class="line">EU：年轻代中Eden（伊甸园）目前已使用空间 (字节)</span><br><span class="line">OC：Old代的容量 (字节)</span><br><span class="line">OU：Old代目前已使用空间 (字节)</span><br><span class="line">MC: 元数据大小</span><br><span class="line">MU: 元数据使用</span><br><span class="line">CCSC: 压缩类空间</span><br><span class="line">CCSU: 压缩类使用</span><br><span class="line">YGC：从应用程序启动到采样时年轻代中gc次数</span><br><span class="line">YGCT：从应用程序启动到采样时年轻代中gc所用时间(s)</span><br><span class="line">FGC：从应用程序启动到采样时old代(全gc)gc次数</span><br><span class="line">FGCT：从应用程序启动到采样时old代(全gc)gc所用时间(s)</span><br><span class="line">GCT：从应用程序启动到采样时gc用的总时间(s)</span><br></pre></td></tr></table></figure>
+
+<p>-gccapacity：显示各个代的容量以及使用情况；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">NGCMN：新生代最小容量</span><br><span class="line">NGCMX：新生代最大容量</span><br><span class="line">NGC：当前新生代容量</span><br><span class="line">S0C：第一个幸存区大小</span><br><span class="line">S1C：第二个幸存区的大小</span><br><span class="line">EC：伊甸园区的大小</span><br><span class="line">OGCMN：老年代最小容量</span><br><span class="line">OGCMX：老年代最大容量</span><br><span class="line">OGC：当前老年代大小</span><br><span class="line">OC:当前老年代大小</span><br><span class="line">MCMN:最小元数据容量</span><br><span class="line">MCMX：最大元数据容量</span><br><span class="line">MC：当前元数据空间大小</span><br><span class="line">CCSMN：最小压缩类空间大小</span><br><span class="line">CCSMX：最大压缩类空间大小</span><br><span class="line">CCSC：当前压缩类空间大小</span><br><span class="line">YGC：年轻代gc次数</span><br><span class="line">FGC：老年代GC次数</span><br></pre></td></tr></table></figure>
+
+<p>-gcmetacapacity：显示metaspace的大小</p>
+<p>-gcnew：显示新生代信息；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">S0C：第一个幸存区大小</span><br><span class="line">S1C：第二个幸存区的大小</span><br><span class="line">S0U：第一个幸存区的使用大小</span><br><span class="line">S1U：第二个幸存区的使用大小</span><br><span class="line">TT:对象在新生代存活的次数</span><br><span class="line">MTT:对象在新生代存活的最大次数</span><br><span class="line">DSS:期望的幸存区大小</span><br><span class="line">EC：伊甸园区的大小</span><br><span class="line">EU：伊甸园区的使用大小</span><br><span class="line">YGC：年轻代垃圾回收次数</span><br><span class="line">YGCT：年轻代垃圾回收消耗时间</span><br></pre></td></tr></table></figure>
+
+<p>-gcnewcapacity：显示新生代大小和使用情况；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">NGCMN：新生代最小容量</span><br><span class="line">NGCMX：新生代最大容量</span><br><span class="line">NGC：当前新生代容量</span><br><span class="line">S0CMX：最大幸存1区大小</span><br><span class="line">S0C：当前幸存1区大小</span><br><span class="line">S1CMX：最大幸存2区大小</span><br><span class="line">S1C：当前幸存2区大小</span><br><span class="line">ECMX：最大伊甸园区大小</span><br><span class="line">EC：当前伊甸园区大小</span><br><span class="line">YGC：年轻代垃圾回收次数</span><br><span class="line">FGC：老年代回收次数</span><br></pre></td></tr></table></figure>
+
+<p>-gcold：显示老年代和永久代的信息；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">MC：方法区大小</span><br><span class="line">MU：方法区使用大小</span><br><span class="line">CCSC:压缩类空间大小</span><br><span class="line">CCSU:压缩类空间使用大小</span><br><span class="line">OC：老年代大小</span><br><span class="line">OU：老年代使用大小</span><br><span class="line">YGC：年轻代垃圾回收次数</span><br><span class="line">FGC：老年代垃圾回收次数</span><br><span class="line">FGCT：老年代垃圾回收消耗时间</span><br><span class="line">GCT：垃圾回收消耗总时间</span><br></pre></td></tr></table></figure>
+
+<p>-gcoldcapacity：显示老年代的大小；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">OGCMN：老年代最小容量</span><br><span class="line">OGCMX：老年代最大容量</span><br><span class="line">OGC：当前老年代大小</span><br><span class="line">OC：老年代大小</span><br><span class="line">YGC：年轻代垃圾回收次数</span><br><span class="line">FGC：老年代垃圾回收次数</span><br><span class="line">FGCT：老年代垃圾回收消耗时间</span><br><span class="line">GCT：垃圾回收消耗总时间</span><br></pre></td></tr></table></figure>
+
+<p>-gcutil：显示垃圾收集信息；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">S0：幸存1区当前使用比例</span><br><span class="line">S1：幸存2区当前使用比例</span><br><span class="line">E：伊甸园区使用比例</span><br><span class="line">O：老年代使用比例</span><br><span class="line">M：元数据区使用比例</span><br><span class="line">CCS：压缩使用比例</span><br><span class="line">YGC：年轻代垃圾回收次数</span><br><span class="line">FGC：老年代垃圾回收次数</span><br><span class="line">FGCT：老年代垃圾回收消耗时间</span><br><span class="line">GCT：垃圾回收消耗总时间</span><br></pre></td></tr></table></figure>
+
+<p>-gccause：显示垃圾回收的相关信息（通-gcutil）,同时显示最后一次或当前正在发生的垃圾回收的诱因；</p>
+<p>-printcompilation：输出JIT编译的方法信息；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Compiled：最近编译方法的数量</span><br><span class="line">Size：最近编译方法的字节码数量</span><br><span class="line">Type：最近编译方法的编译类型。</span><br><span class="line">Method：方法名标识。</span><br></pre></td></tr></table></figure>
+
+<h3 id="jmap"><a href="#jmap" class="headerlink" title="jmap"></a>jmap</h3><p>jmap(Java Memory Map)监视进程运行中的jvm物理内存的占用情况，该进程内存内，所有对象的情况，例如产生了哪些对象，对象数量；</p>
+<h3 id="jinfo"><a href="#jinfo" class="headerlink" title="jinfo"></a>jinfo</h3><p>jinfo(Java Configuration Info)观察进程运行环境参数，包括Java System属性和JVM命令行参数</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/29/JVM基础知识总结/" data-id="cjyoh28n30007jwvaq61kutc0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/07/26/HTTP、TCP、UDP以及SOCKET之间的区别联系/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">HTTP、TCP、UDP、SOCKET</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/07/29/JVM基础知识总结/">JVM基础知识总结</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/26/HTTP、TCP、UDP以及SOCKET之间的区别联系/">HTTP、TCP、UDP、SOCKET</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/26/ZooKeeper基础/">zooKeeper基础</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/20/SpringCloud基础架构搭建/">SpringCloud基础架构</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/18/SpringMVC基础知识总结/">SpringMVC基础知识总结</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 扶邓松<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
